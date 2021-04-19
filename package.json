@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/brittanieboyko/social-club/issues"
   },
-  "homepage": "https://github.com/brittanieboyko/social-club#readme"
+  "homepage": "https://github.com/brittanieboyko/social-club#readme",
+  "dependencies": {
+    "apollo-server": "^2.23.0",
+    "graphql": "^15.5.0",
+    "mongoose": "^5.12.4"
+  }
 }
