@@ -2,12 +2,27 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
 
-const { validateRegisterInput } = require("../../util/validators");
+const { validateRegisterInput, validateLoginInput } = require("../../util/validators");
 const { SECRET_KEY } = require("../../config");
 const User = require("../../models/User");
 
 module.exports = {
   Mutation: {
+    async login(
+      _, {username, password}) {
+        const { errors, valid } = validateLoginInput(username, password);
+        const user = await User.findOne({ username });
+
+        if(!user) {
+          errors.general = 'User not found';
+          throw new UserInputError('User not found', { errors } );
+        }
+        const match = await bcrypt.compare(password, user.password);
+        if(!match){
+          error.general = 'Wrong Credentials';
+          throw new UserInputError('Wrong Credentials', { errors });
+        }
+      },
     async register(
       _,
       { registerInput: { username, email, password, confirmPassword } }
